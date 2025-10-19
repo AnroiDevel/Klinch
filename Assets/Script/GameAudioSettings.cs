@@ -41,15 +41,27 @@ namespace Klinch.Settings
 
         public void Apply()
         {
+            if(_mixer == null)
+            {
+                Debug.LogWarning("GameAudioSettings.Apply called without an assigned AudioMixer.");
+                return;
+            }
+
             SetDb(_pMaster, master / 10);
             SetDb(_pMusic, music / 10);
             SetDb(_pSfx, sfx / 10);
         }
 
-        void SetDb(string param, float linear01)
+        private void SetDb(string param, float linear01)
         {
             // 0 → -80 dB (почти тишина), 1 → 0 dB
             float db = linear01 <= 0.0001f ? -80f : 20f * Mathf.Log10(Mathf.Clamp01(linear01));
+
+            if(!_mixer)
+            {
+                return;
+            }
+
             _mixer.SetFloat(param, db);
         }
     }
