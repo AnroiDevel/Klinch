@@ -55,11 +55,15 @@ namespace SichuanDynasty
 
         public void Stop()
         {
-            StopCoroutine("_TimerCallBack");
+            StopCoroutine(nameof(_TimerCallBack));
+            _isStarted = false;
+            _isFinished = true;
+            _isPaused = false;
+            _timeLeft = 0.0f;
         }
 
 
-        IEnumerator _TimerCallBack()
+        private IEnumerator _TimerCallBack()
         {
             while (_timeLeft > 0.0f) {
                 if (_isPaused) {
