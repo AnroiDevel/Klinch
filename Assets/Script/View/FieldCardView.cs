@@ -64,24 +64,31 @@ namespace SichuanDynasty.UI
 
         public void ToggleSelect()
         {
-            if(gameController.IsInteractable)
+            if(!gameController.IsInteractable)
             {
-                _isSelected = !_isSelected;
                 gameController.ToggleSelect(fieldCardIndex);
+                return;
+            }
 
-                if(_isSelected && (gameController.CurrentPhase == GameController.Phase.Shuffle))
-                {
-                    gameController.SetInteractable(false);
-                    StartCoroutine(nameof(ChangeToBattlePhase));
-                }
+            if(gameController.CurrentPlayerIndex != playerIndex)
+            {
+                return;
+            }
 
-                if(gameController.CurrentPhase != GameController.Phase.Shuffle)
-                {
-                    imgSelectDialog.GetComponent<Image>().sprite = _isSelected ? spriteAllConfirmSelect[1] : spriteAllConfirmSelect[0];
-                }
+            _isSelected = !_isSelected;
+            gameController.ToggleSelect(fieldCardIndex);
+
+            if(_isSelected && (gameController.CurrentPhase == GameController.Phase.Shuffle))
+            {
+                gameController.SetInteractable(false);
+                StartCoroutine(nameof(ChangeToBattlePhase));
+            }
+
+            if(gameController.CurrentPhase != GameController.Phase.Shuffle)
+            {
+                imgSelectDialog.GetComponent<Image>().sprite = _isSelected ? spriteAllConfirmSelect[1] : spriteAllConfirmSelect[0];
             }
         }
-
 
         private void Update()
         {
