@@ -9,9 +9,28 @@ namespace Klinch.UI
         [SerializeField] private AudioClip _hover;
         [SerializeField] private AudioClip _click;
 
+        private void Awake()
+        {
+            if(_source == null)
+            {
+                _source = GetComponent<AudioSource>();
+            }
+
+            if(_source == null)
+            {
+                _source = gameObject.AddComponent<AudioSource>();
+            }
+
+            _source.playOnAwake = false;
+        }
+
         private void Reset()
         {
-            _source = gameObject.AddComponent<AudioSource>();
+            _source = GetComponent<AudioSource>();
+            if(_source == null)
+            {
+                _source = gameObject.AddComponent<AudioSource>();
+            }
             _source.playOnAwake = false;
         }
 
@@ -20,7 +39,7 @@ namespace Klinch.UI
 
         private void Play(AudioClip clip)
         {
-            if(clip == null)
+            if(clip == null || _source == null)
                 return;
             _source.pitch = Random.Range(0.98f, 1.02f);
             _source.PlayOneShot(clip, 0.9f);

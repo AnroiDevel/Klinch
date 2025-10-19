@@ -29,9 +29,10 @@ namespace TMPro.Examples
 
         private AnimationCurve CopyAnimationCurve(AnimationCurve curve)
         {
-            AnimationCurve newCurve = new AnimationCurve();
-
-            newCurve.keys = curve.keys;
+            AnimationCurve newCurve = new()
+            {
+                keys = curve.keys
+            };
 
             return newCurve;
         }
