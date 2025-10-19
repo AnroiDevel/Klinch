@@ -140,50 +140,6 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: "ChatGPT Image 17 \u043E\u043A\u0442. 2025 \u0433., 05_21_26_1"
-      rect:
-        serializedVersion: 2
-        x: 963
-        y: 842
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9457d5237c950ed50800000000000000
-      internalID: 6764505352388834633
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "ChatGPT Image 17 \u043E\u043A\u0442. 2025 \u0433., 05_21_26_2"
-      rect:
-        serializedVersion: 2
-        x: 963
-        y: 755
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5d7f60bdedce6dc50800000000000000
-      internalID: 6689794738407012309
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
