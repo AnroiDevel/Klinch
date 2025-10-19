@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Klinch.UI
@@ -26,7 +27,7 @@ namespace Klinch.UI
             StartCoroutine(Play());
         }
 
-        private System.Collections.IEnumerator Play()
+        private IEnumerator Play()
         {
             // Fade in
             float t = 0f;

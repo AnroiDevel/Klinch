@@ -95,11 +95,11 @@ namespace SichuanDynasty.UI
 
                 }
 
-                _CheckWinner();
+                CheckWinner();
             }
         }
 
-        private void _CheckWinner()
+        private void CheckWinner()
         {
             if((_results[0] != RockPaperScissorState.None) && (_results[1] != RockPaperScissorState.None))
             {
@@ -108,7 +108,7 @@ namespace SichuanDynasty.UI
                 {
                     _isTie = true;
                     _isHasWinner = false;
-                    StartCoroutine(nameof(_ShowResult), _isTie);
+                    StartCoroutine(nameof(ShowResult), _isTie);
 
                 }
                 else
@@ -160,7 +160,7 @@ namespace SichuanDynasty.UI
                     }
 
                     _isTie = false;
-                    _ShowResult(_isTie);
+                    ShowResult(_isTie);
                     _isHasWinner = true;
                 }
             }
@@ -168,11 +168,11 @@ namespace SichuanDynasty.UI
             if(_isHasWinner)
             {
                 _isProcess = false;
-                StartCoroutine("_NextUI");
+                StartCoroutine(nameof(NextUI));
             }
         }
 
-        private void _ShowResult(bool isTile)
+        private void ShowResult(bool isTile)
         {
             for(int i = 0; i < resultPanels.Length; i++)
             {
@@ -211,11 +211,11 @@ namespace SichuanDynasty.UI
                 {
                     _results[i] = RockPaperScissorState.None;
                 }
-                StartCoroutine("_ReShowUI");
+                StartCoroutine(nameof(ReShowUI));
             }
         }
 
-        private IEnumerator _ReShowUI()
+        private IEnumerator ReShowUI()
         {
             yield return new WaitForSeconds(0.8f);
 
@@ -236,7 +236,7 @@ namespace SichuanDynasty.UI
             _isProcess = true;
         }
 
-        private IEnumerator _NextUI()
+        private IEnumerator NextUI()
         {
             yield return new WaitForSeconds(2.0f);
             gameObject.SetActive(false);

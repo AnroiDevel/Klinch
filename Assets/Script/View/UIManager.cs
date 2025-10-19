@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -143,11 +142,11 @@ namespace SichuanDynasty.UI
             switch (phase) {
                 case GameController.Phase.Shuffle:
                     imgPlayerTurn.sprite = gameController.Players[0].IsTurn ? spriteAllPlayerTurn[0] : spriteAllPlayerTurn[1];
-                    StartCoroutine("_ShowShufflePhaseAlert");
+                    StartCoroutine(nameof(ShowShufflePhaseAlert));
                 break;
 
                 case GameController.Phase.Battle:
-                    StartCoroutine("_ShowBattlePhaseAlert");
+                    StartCoroutine(nameof(ShowBattlePhaseAlert));
                 break;
             }
         }
@@ -288,7 +287,7 @@ namespace SichuanDynasty.UI
                         }
 
                         if (_isHandlingSelectingCards) {
-                            _HandleSelectCardsFromPlayer(gameController.CurrentPlayerIndex);
+                            HandleSelectCardsFromPlayer(gameController.CurrentPlayerIndex);
                             
                         }
 
@@ -297,7 +296,7 @@ namespace SichuanDynasty.UI
                             if (!_isInitShowGameOver) {
                                 anims[0].SetBool("IsHurt", false);
                                 anims[1].SetBool("IsHurt", false);
-                                StartCoroutine("_ShowGameOverUI");
+                                StartCoroutine(nameof(ShowGameOverUI));
                                 _isInitShowGameOver = true;
 
                             }
@@ -358,7 +357,7 @@ namespace SichuanDynasty.UI
             return isNeed;
         }
 
-        private void _HandleSelectCardsFromPlayer(int playerIndex)
+        private void HandleSelectCardsFromPlayer(int playerIndex)
         {
             if (_currentAvailableButton.Count > 0) {
                 if (playerIndex == 0) {
@@ -406,7 +405,7 @@ namespace SichuanDynasty.UI
         }
 
 
-        private IEnumerator _ShowGameOverUI()
+        private IEnumerator ShowGameOverUI()
         {
             yield return new WaitForSeconds(1.3f);
             gameplayUI.SetActive(false);
@@ -420,7 +419,7 @@ namespace SichuanDynasty.UI
             allEventSystem[0].SetSelectedGameObject(btnRestart);
         }
 
-        private IEnumerator _ShowShufflePhaseAlert()
+        private IEnumerator ShowShufflePhaseAlert()
         {
             imgPlayerTurn.gameObject.SetActive(true);
             imgPhases[0].SetActive(true);
@@ -429,7 +428,7 @@ namespace SichuanDynasty.UI
             imgPlayerTurn.gameObject.SetActive(false);
         }
 
-        private IEnumerator _ShowBattlePhaseAlert()
+        private IEnumerator ShowBattlePhaseAlert()
         {
             imgPhases[1].SetActive(true);
             yield return new WaitForSeconds(1.0f);

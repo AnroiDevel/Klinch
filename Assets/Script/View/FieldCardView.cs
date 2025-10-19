@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -71,7 +70,7 @@ namespace SichuanDynasty.UI
 
                 if (_isSelected && (gameController.CurrentPhase == GameController.Phase.Shuffle)) {
                     gameController.SetInteractable(false);
-                    StartCoroutine("_ChangeToBattlePhase");
+                    StartCoroutine(nameof(ChangeToBattlePhase));
                 }
 
                 if (gameController.CurrentPhase != GameController.Phase.Shuffle) {
@@ -108,7 +107,7 @@ namespace SichuanDynasty.UI
             }
         }
 
-        private IEnumerator _ChangeToBattlePhase()
+        private IEnumerator ChangeToBattlePhase()
         {
             yield return new WaitForSeconds(0.5f);
             gameController.NextPhase();

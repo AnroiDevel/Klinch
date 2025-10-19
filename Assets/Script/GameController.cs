@@ -544,7 +544,7 @@ namespace SichuanDynasty
                 {
                     if(!_isInitDelayNextTurn)
                     {
-                        StartCoroutine("_DelayBeforeNextTurn");
+                        StartCoroutine(nameof(DelayBeforeNextTurn));
                         _isInitDelayNextTurn = true;
                     }
                 }
