@@ -35,7 +35,7 @@ namespace SichuanDynasty
             _timeLeft = maxTime;
             _isFinished = false;
             _isStarted = true;
-            StartCoroutine("_TimerCallBack");
+            StartCoroutine(nameof(_TimerCallBack));
         }
 
         public void SetMaxTime(float value)

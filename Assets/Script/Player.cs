@@ -1,21 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace SichuanDynasty
 {
     public class Player : MonoBehaviour
     {
-        bool _isTurn;
-        bool _isWin;
+        private bool _isTurn;
+        private bool _isWin;
 
-        Deck _deck;
-        Deck _fieldDeck;
-        Deck _selectedDeck;
-        Deck _disableDeck;
+        private Deck _deck;
+        private Deck _fieldDeck;
+        private Deck _selectedDeck;
+        private Deck _disableDeck;
 
-        Status _health;
-        Status _criticalStack;
+        private Status _health;
+        private Status _criticalStack;
 
 
         public bool IsTurn { get { return _isTurn; } }
@@ -55,8 +53,9 @@ namespace SichuanDynasty
 
         public void FirstDraw(int totalCard)
         {
-            for (int i = 0; i < totalCard; i++) {
-                var index = (int)(Random.Range(0, _deck.Cards.Count - 1));
+            for(int i = 0; i < totalCard; i++)
+            {
+                var index = Random.Range(0, _deck.Cards.Count);
                 _fieldDeck.Cards.Add(_deck.Cards[index]);
                 _deck.Cards.RemoveAt(index);
             }
