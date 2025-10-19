@@ -10,22 +10,22 @@ namespace SichuanDynasty.UI
     public class StatusView : MonoBehaviour
     {
         [SerializeField]
-        GameObject plus;
+        private GameObject plus;
 
         [SerializeField]
-        GameObject minus;
+        private GameObject minus;
 
         [SerializeField]
-        Image[] digits;
+        private Image[] digits;
 
         [SerializeField]
-        Sprite[] spriteOneToNine;
+        private Sprite[] spriteOneToNine;
 
         [SerializeField]
-        Color colorPlus;
+        private Color colorPlus;
 
         [SerializeField]
-        Color colorMinus;
+        private Color colorMinus;
 
 
         public StatusView()
@@ -75,7 +75,7 @@ namespace SichuanDynasty.UI
         }
 
 
-        IEnumerator _ShowStatusCallBack()
+        private IEnumerator _ShowStatusCallBack()
         {
             yield return new WaitForSeconds(0.6f);
             HideAllDigits();

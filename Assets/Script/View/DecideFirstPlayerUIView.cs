@@ -8,19 +8,19 @@ namespace SichuanDynasty.UI
     public class DecideFirstPlayerUIView : MonoBehaviour
     {
         [SerializeField]
-        GameController gameController;
+        private GameController gameController;
 
         [SerializeField]
-        GameObject nextUI;
+        private GameObject nextUI;
 
         [SerializeField]
-        GameObject[] gamepadPanels;
+        private GameObject[] gamepadPanels;
 
         [SerializeField]
-        GameObject[] resultPanels;
+        private GameObject[] resultPanels;
 
 
-        enum RockPaperScissorState
+        private enum RockPaperScissorState
         {
             None,
             Rock,
@@ -29,13 +29,13 @@ namespace SichuanDynasty.UI
         }
 
 
-        int _firstPlayerIndex;
+        private int _firstPlayerIndex;
 
-        bool _isHasWinner;
-        bool _isProcess;
-        bool _isTie;
+        private bool _isHasWinner;
+        private bool _isProcess;
+        private bool _isTie;
 
-        RockPaperScissorState[] _results;
+        private RockPaperScissorState[] _results;
 
 
         public DecideFirstPlayerUIView()
@@ -53,12 +53,12 @@ namespace SichuanDynasty.UI
         }
 
 
-        void Update()
+        private void Update()
         {
             _HandlePlayerInput();
         }
 
-        void _HandlePlayerInput()
+        private void _HandlePlayerInput()
         {
             if(gameController.IsGameInit && _isProcess)
             {
@@ -99,7 +99,7 @@ namespace SichuanDynasty.UI
             }
         }
 
-        void _CheckWinner()
+        private void _CheckWinner()
         {
             if((_results[0] != RockPaperScissorState.None) && (_results[1] != RockPaperScissorState.None))
             {
@@ -172,7 +172,7 @@ namespace SichuanDynasty.UI
             }
         }
 
-        void _ShowResult(bool isTile)
+        private void _ShowResult(bool isTile)
         {
             for(int i = 0; i < resultPanels.Length; i++)
             {
@@ -236,7 +236,7 @@ namespace SichuanDynasty.UI
             _isProcess = true;
         }
 
-        IEnumerator _NextUI()
+        private IEnumerator _NextUI()
         {
             yield return new WaitForSeconds(2.0f);
             gameObject.SetActive(false);

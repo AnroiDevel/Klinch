@@ -8,10 +8,10 @@ namespace SichuanDynasty.UI
     public class GamePadInTurnView : MonoBehaviour
     {
         [SerializeField]
-        GameController gameController;
+        private GameController gameController;
 
         [SerializeField]
-        GameObject[] imgAllHideOptions;
+        private GameObject[] imgAllHideOptions;
 
 
         private void Update()

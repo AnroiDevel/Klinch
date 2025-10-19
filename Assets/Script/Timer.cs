@@ -7,7 +7,7 @@ namespace SichuanDynasty
     public class Timer : MonoBehaviour
     {
         [SerializeField]
-        float maxTime;
+        private float maxTime;
 
 
         public float TimeLeft { get { return _timeLeft; } }
@@ -15,11 +15,11 @@ namespace SichuanDynasty
         public bool IsFinished { get { return _isFinished; } }
         public bool IsPaused { get { return _isPaused; } }
 
-        float _timeLeft;
+        private float _timeLeft;
 
-        bool _isStarted;
-        bool _isFinished;
-        bool _isPaused;
+        private bool _isStarted;
+        private bool _isFinished;
+        private bool _isPaused;
 
 
         public Timer()

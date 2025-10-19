@@ -15,13 +15,13 @@ namespace Klinch.Settings
         [Range(0f, 10f)] public float music = 0.8f;
         [Range(0f, 10f)] public float sfx = 0.9f;
 
-        const string _kMaster = "gas_master";
-        const string _kMusic = "gas_music";
-        const string _kSfx = "gas_sfx";
+        private const string _kMaster = "gas_master";
+        private const string _kMusic = "gas_music";
+        private const string _kSfx = "gas_sfx";
 
-        const string _pMaster = "MasterVolDb";
-        const string _pMusic = "MusicVolDb";
-        const string _pSfx = "SfxVolDb";
+        private const string _pMaster = "MasterVolDb";
+        private const string _pMusic = "MusicVolDb";
+        private const string _pSfx = "SfxVolDb";
 
         public void Load()
         {

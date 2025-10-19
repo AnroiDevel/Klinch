@@ -8,13 +8,13 @@ namespace SichuanDynasty.UI
     public class TimerView : MonoBehaviour
     {
         [SerializeField]
-        GameController gameController;
+        private GameController gameController;
 
         [SerializeField]
-        Text txtTimer;
+        private Text txtTimer;
 
 
-        void Update()
+        private void Update()
         {
             if (gameController && txtTimer) {
                 if (gameController.IsGameInit && gameController.IsGameStart) {

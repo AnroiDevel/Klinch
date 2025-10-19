@@ -6,9 +6,9 @@ namespace SichuanDynasty
 {
     public class Status
     {
-        int _current;
-        int _max;
-        int _min;
+        private int _current;
+        private int _max;
+        private int _min;
 
 
         public int Current { get { return _current; } }

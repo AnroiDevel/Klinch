@@ -9,37 +9,37 @@ namespace SichuanDynasty.UI
     public class FieldCardView : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
         [SerializeField]
-        int playerIndex;
+        private int playerIndex;
 
         [SerializeField]
-        int fieldCardIndex;
+        private int fieldCardIndex;
 
         [SerializeField]
-        GameController gameController;
+        private GameController gameController;
 
         [SerializeField]
-        Text txtCard;
+        private Text txtCard;
 
         [SerializeField]
-        Image imgCard;
+        private Image imgCard;
 
         [SerializeField]
-        Sprite[] imgAllCardState;
+        private Sprite[] imgAllCardState;
 
         [SerializeField]
-        GameObject imgSelectDialog;
+        private GameObject imgSelectDialog;
 
         [SerializeField]
-        GameObject imgConfirmSelect;
+        private GameObject imgConfirmSelect;
 
         [SerializeField]
-        Sprite[] spriteAllConfirmSelect;
+        private Sprite[] spriteAllConfirmSelect;
 
 
         public bool IsSelected { get { return _isSelected; } }
 
 
-        bool _isSelected;
+        private bool _isSelected;
 
 
         public FieldCardView()
@@ -108,7 +108,7 @@ namespace SichuanDynasty.UI
             }
         }
 
-        IEnumerator _ChangeToBattlePhase()
+        private IEnumerator _ChangeToBattlePhase()
         {
             yield return new WaitForSeconds(0.5f);
             gameController.NextPhase();

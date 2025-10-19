@@ -6,7 +6,7 @@ namespace SichuanDynasty
 {
     public class Deck
     {
-        List<int> _cardList;
+        private List<int> _cardList;
 
 
         public List<int> Cards { get { return _cardList; } }

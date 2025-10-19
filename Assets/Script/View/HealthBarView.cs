@@ -8,16 +8,16 @@ namespace SichuanDynasty.UI
     public class HealthBarView : MonoBehaviour
     {
         [SerializeField]
-        int playerIndex;
+        private int playerIndex;
 
         [SerializeField]
-        GameController gameController;
+        private GameController gameController;
 
         [SerializeField]
-        Text txtHealths;
+        private Text txtHealths;
 
 
-        void Update()
+        private void Update()
         {
             if (gameController) {
                 if (gameController.IsGameInit && gameController.IsGameStart && !gameController.IsGameOver) {

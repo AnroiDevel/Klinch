@@ -8,13 +8,13 @@ namespace SichuanDynasty.UI
     public class PhaseView : MonoBehaviour
     {
         [SerializeField]
-        GameController gameController;
+        private GameController gameController;
 
         [SerializeField]
-        Image imgPhase;
+        private Image imgPhase;
 
         [SerializeField]
-        Sprite[] imgAllPhases;
+        private Sprite[] imgAllPhases;
 
 
         private void Update()

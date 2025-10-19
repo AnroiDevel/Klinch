@@ -10,79 +10,79 @@ namespace SichuanDynasty.UI
     public class UIManager : MonoBehaviour
     {
         [SerializeField]
-        GameController gameController;
+        private GameController gameController;
 
         [SerializeField]
-        GameObject pausePanel;
+        private GameObject pausePanel;
 
         [SerializeField]
-        GameObject[] disableDecksView;
+        private GameObject[] disableDecksView;
 
         [SerializeField]
-        Text[] txtCardNum;
+        private Text[] txtCardNum;
 
         [SerializeField]
-        GameObject gameOverUI;
+        private GameObject gameOverUI;
 
         [SerializeField]
-        GameObject gameplayUI;
+        private GameObject gameplayUI;
 
         [SerializeField]
-        EventSystem[] allEventSystem;
+        private EventSystem[] allEventSystem;
 
         [SerializeField]
-        GameObject btnRestart;
+        private GameObject btnRestart;
 
         [SerializeField]
-        GameObject[] player1Cards;
+        private GameObject[] player1Cards;
 
         [SerializeField]
-        GameObject[] player2Cards;
+        private GameObject[] player2Cards;
 
         [SerializeField]
-        Image imgCurrentPlayerTurn;
+        private Image imgCurrentPlayerTurn;
 
         [SerializeField]
-        Sprite[] spritePlayerTurn;
+        private Sprite[] spritePlayerTurn;
 
         [SerializeField]
-        GameObject[] selectDialogs;
+        private GameObject[] selectDialogs;
 
         [SerializeField]
-        GameObject[] imgPhases;
+        private GameObject[] imgPhases;
 
         [SerializeField]
-        Image imgPlayerTurn;
+        private Image imgPlayerTurn;
 
         [SerializeField]
-        Sprite[] spriteAllPlayerTurn;
+        private Sprite[] spriteAllPlayerTurn;
 
         [SerializeField]
-        GameObject[] imgWarning;
+        private GameObject[] imgWarning;
 
         [SerializeField]
-        StatusView[] statusViews;
+        private StatusView[] statusViews;
 
         [SerializeField]
-        Animator[] anims;
+        private Animator[] anims;
 
         [SerializeField]
-        GameObject[] imgCriticals;
+        private GameObject[] imgCriticals;
 
         [SerializeField]
-        GameObject btnMainMenuInPauseMenu;
+        private GameObject btnMainMenuInPauseMenu;
 
 
-        bool _isInitShowGameOver;
+        private bool _isInitShowGameOver;
 
-        bool _isInitHandle;
-        bool _isHandlingSelectingCards;
-        bool _isAxisInUse;
+        private bool _isInitHandle;
+        private bool _isHandlingSelectingCards;
+        private bool _isAxisInUse;
 
-        List<GameObject> _currentAvailableButton;
-        int _currentSelectIndex;
+        private List<GameObject> _currentAvailableButton;
+        private int _currentSelectIndex;
 
-        GameObject _previousSelectedObj;
+        private GameObject _previousSelectedObj;
 
 
         public UIManager()
@@ -237,7 +237,7 @@ namespace SichuanDynasty.UI
         }
 
 
-        void Update()
+        private void Update()
         {
             if (gameController) {
                 if (gameController.IsGameInit && gameController.IsGameStart) {
@@ -307,7 +307,7 @@ namespace SichuanDynasty.UI
             }
         }
 
-        void _HandleSelectCards(int playerIndex)
+        private void _HandleSelectCards(int playerIndex)
         {
             var isNeedHandle = _IsNeedHandleSelecting(playerIndex);
             if (isNeedHandle) {
@@ -334,7 +334,7 @@ namespace SichuanDynasty.UI
             }
         }
 
-        bool _IsNeedHandleSelecting(int playerIndex)
+        private bool _IsNeedHandleSelecting(int playerIndex)
         {
             var isNeed = false;
 
@@ -358,7 +358,7 @@ namespace SichuanDynasty.UI
             return isNeed;
         }
 
-        void _HandleSelectCardsFromPlayer(int playerIndex)
+        private void _HandleSelectCardsFromPlayer(int playerIndex)
         {
             if (_currentAvailableButton.Count > 0) {
                 if (playerIndex == 0) {
@@ -406,7 +406,7 @@ namespace SichuanDynasty.UI
         }
 
 
-        IEnumerator _ShowGameOverUI()
+        private IEnumerator _ShowGameOverUI()
         {
             yield return new WaitForSeconds(1.3f);
             gameplayUI.SetActive(false);
@@ -420,7 +420,7 @@ namespace SichuanDynasty.UI
             allEventSystem[0].SetSelectedGameObject(btnRestart);
         }
 
-        IEnumerator _ShowShufflePhaseAlert()
+        private IEnumerator _ShowShufflePhaseAlert()
         {
             imgPlayerTurn.gameObject.SetActive(true);
             imgPhases[0].SetActive(true);
@@ -429,7 +429,7 @@ namespace SichuanDynasty.UI
             imgPlayerTurn.gameObject.SetActive(false);
         }
 
-        IEnumerator _ShowBattlePhaseAlert()
+        private IEnumerator _ShowBattlePhaseAlert()
         {
             imgPhases[1].SetActive(true);
             yield return new WaitForSeconds(1.0f);

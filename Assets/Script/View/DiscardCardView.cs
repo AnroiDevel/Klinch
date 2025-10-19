@@ -8,16 +8,16 @@ namespace SichuanDynasty.UI
     public class DiscardCardView : MonoBehaviour
     {
         [SerializeField]
-        int playerIndex;
+        private int playerIndex;
 
         [SerializeField]
-        GameController gameController;
+        private GameController gameController;
 
         [SerializeField]
-        Text txtCardNum;
+        private Text txtCardNum;
 
 
-        void Update()
+        private void Update()
         {
             if (gameController) {
 

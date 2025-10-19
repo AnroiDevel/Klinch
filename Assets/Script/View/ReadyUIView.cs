@@ -9,23 +9,23 @@ namespace SichuanDynasty.UI
     public class ReadyUIView : MonoBehaviour
     {
         [SerializeField]
-        GameController gameController;
+        private GameController gameController;
 
         [SerializeField]
-        Image[] imgReadyList;
+        private Image[] imgReadyList;
 
         [SerializeField]
-        Sprite[] preReadySprites;
+        private Sprite[] preReadySprites;
 
         [SerializeField]
-        Sprite[] postReadySprites;
+        private Sprite[] postReadySprites;
 
         [SerializeField]
-        GameObject nextUI;
+        private GameObject nextUI;
 
 
-        bool _isProcess;
-        bool[] _readyList;
+        private bool _isProcess;
+        private bool[] _readyList;
 
 
         public ReadyUIView()
@@ -38,7 +38,7 @@ namespace SichuanDynasty.UI
         }
 
 
-        void Update()
+        private void Update()
         {
             if (gameController && _isProcess) {
                 if (gameController.IsGameInit) {
@@ -70,7 +70,7 @@ namespace SichuanDynasty.UI
             }
         }
 
-        void _CheckIsAllReady()
+        private void _CheckIsAllReady()
         {
             var isReady = true;
             foreach (bool result in _readyList) {
@@ -84,7 +84,7 @@ namespace SichuanDynasty.UI
             }
         }
 
-        void _ChangeToNextUI()
+        private void _ChangeToNextUI()
         {
             gameObject.SetActive(false);
             nextUI.SetActive(true);

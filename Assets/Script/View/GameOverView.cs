@@ -9,22 +9,22 @@ namespace SichuanDynasty.UI
     public class GameOverView : MonoBehaviour
     {
         [SerializeField]
-        GameController gameController;
+        private GameController gameController;
 
         [SerializeField]
-        Image[] imgResults;
+        private Image[] imgResults;
 
         [SerializeField]
-        Sprite[] spriteAllResults;
+        private Sprite[] spriteAllResults;
 
         [SerializeField]
-        Text txtTotalTurn;
+        private Text txtTotalTurn;
 
         [SerializeField]
-        Animator[] anims;
+        private Animator[] anims;
 
 
-        void Update()
+        private void Update()
         {
             if (gameController) {
 
