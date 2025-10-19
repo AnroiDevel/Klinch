@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,13 +27,6 @@ namespace SichuanDynasty.UI
         private Color colorMinus;
 
 
-        public StatusView()
-        {
-            digits = new Image[2];
-            spriteOneToNine = new Sprite[10];
-        }
-
-
         public void ShowStatus(string sign, int totalPoint)
         {
             HideAllDigits();
@@ -43,22 +35,46 @@ namespace SichuanDynasty.UI
             var isPlus = (sign == "+");
             var isMinus = (sign == "-");
 
+            if(!isPlus && !isMinus)
+            {
+                Debug.LogWarning($"Unknown status sign '{sign}'. Expected '+' or '-'", this);
+            }
+
             plus.SetActive(isPlus);
             minus.SetActive(isMinus);
 
             var digitArry = totalPoint.ToString().ToArray();
 
-            for (int i = 0; i < digitArry.Length; i++) {
+            if(digits == null || spriteOneToNine == null)
+            {
+                Debug.LogError("StatusView is missing digit or sprite assignments.", this);
+                return;
+            }
+
+            if(digitArry.Length > digits.Length)
+            {
+                Debug.LogWarning($"StatusView has only {digits.Length} digit slots, but value '{totalPoint}' requires {digitArry.Length}.", this);
+                digitArry = digitArry.Take(digits.Length).ToArray();
+            }
+
+
+            for(int i = 0; i < digitArry.Length; i++) {
 
                 var value = Convert.ToInt32(digitArry[i]);
                 value -= 48;
+
+                if(value < 0 || value >= spriteOneToNine.Length)
+                {
+                    Debug.LogWarning($"Digit '{digitArry[i]}' has no configured sprite.", this);
+                    continue;
+                }
 
                 digits[i].color = isPlus ? colorPlus : colorMinus;
                 digits[i].sprite = spriteOneToNine[value];
                 digits[i].gameObject.SetActive(true);
             }
 
-            StartCoroutine("_ShowStatusCallBack");
+            StartCoroutine(nameof(ShowStatusCallBack));
         }
 
         public void HideAllDigits()
@@ -75,7 +91,7 @@ namespace SichuanDynasty.UI
         }
 
 
-        private IEnumerator _ShowStatusCallBack()
+        private IEnumerator ShowStatusCallBack()
         {
             yield return new WaitForSeconds(0.6f);
             HideAllDigits();
