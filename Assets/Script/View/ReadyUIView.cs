@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace SichuanDynasty.UI
@@ -24,67 +21,107 @@ namespace SichuanDynasty.UI
         private GameObject nextUI;
 
 
-        private bool _isProcess;
+        private bool _isProcess = true;
         private bool[] _readyList;
 
 
-        public ReadyUIView()
+        private void Awake()
         {
-            imgReadyList = new Image[GameController.MAX_PLAYER_SUPPORT];
-            preReadySprites = new Sprite[GameController.MAX_PLAYER_SUPPORT];
-            postReadySprites = new Sprite[GameController.MAX_PLAYER_SUPPORT];
             _readyList = new bool[GameController.MAX_PLAYER_SUPPORT];
+        }
+
+        private void OnEnable()
+        {
             _isProcess = true;
+
+            if(_readyList == null || _readyList.Length != GameController.MAX_PLAYER_SUPPORT)
+            {
+                _readyList = new bool[GameController.MAX_PLAYER_SUPPORT];
+            }
+
+            for(int i = 0; i < _readyList.Length; i++)
+            {
+                _readyList[i] = false;
+
+                if(imgReadyList != null && i < imgReadyList.Length &&
+                   preReadySprites != null && i < preReadySprites.Length &&
+                   imgReadyList[i] != null && preReadySprites[i] != null)
+                {
+                    imgReadyList[i].sprite = preReadySprites[i];
+                }
+            }
         }
 
 
         private void Update()
         {
-            if (gameController && _isProcess) {
-                if (gameController.IsGameInit) {
+            if(gameController && _isProcess)
+            {
+                if(gameController.IsGameInit)
+                {
 
-                    if (Input.GetButtonDown("StartPlayer1")) {
-                        _ToggleReady(0);
+                    if(Input.GetButtonDown("StartPlayer1"))
+                    {
+                        ToggleReady(0);
 
-                    } else if (Input.GetButtonDown("StartPlayer2")) {
-                        _ToggleReady(1);
+                    }
+                    else if(Input.GetButtonDown("StartPlayer2"))
+                    {
+                        ToggleReady(1);
 
                     }
 
-                    _CheckIsAllReady();
+                    CheckIsAllReady();
                 }
             }
         }
 
-        public void _ToggleReady(int playerIndex)
+        public void ToggleReady(int playerIndex)
         {
+            if(_readyList == null || playerIndex < 0 || playerIndex >= _readyList.Length)
+            {
+                Debug.LogWarning($"ReadyUIView received invalid player index {playerIndex}.", this);
+                return;
+            }
+
             _readyList[playerIndex] = !_readyList[playerIndex];
             var isReady = _readyList[playerIndex];
 
-            if (isReady) {
-                imgReadyList[playerIndex].sprite = postReadySprites[playerIndex];
+            var sprites = isReady ? postReadySprites : preReadySprites;
 
-            } else {
-                imgReadyList[playerIndex].sprite = preReadySprites[playerIndex];
-
+            if(imgReadyList == null || playerIndex >= imgReadyList.Length || imgReadyList[playerIndex] == null)
+            {
+                Debug.LogWarning("ReadyUIView is missing Image references for ready indicators.", this);
+                return;
             }
+
+            if(sprites == null || playerIndex >= sprites.Length || sprites[playerIndex] == null)
+            {
+                Debug.LogWarning("ReadyUIView is missing sprite assignments for ready indicators.", this);
+                return;
+            }
+
+            imgReadyList[playerIndex].sprite = sprites[playerIndex];
         }
 
-        private void _CheckIsAllReady()
+        private void CheckIsAllReady()
         {
             var isReady = true;
-            foreach (bool result in _readyList) {
-                if (result == false) {
+            foreach(bool result in _readyList)
+            {
+                if(result == false)
+                {
                     isReady = false;
                     break;
                 }
             }
-            if (isReady) {
-                _ChangeToNextUI();
+            if(isReady)
+            {
+                ChangeToNextUI();
             }
         }
 
-        private void _ChangeToNextUI()
+        private void ChangeToNextUI()
         {
             gameObject.SetActive(false);
             nextUI.SetActive(true);

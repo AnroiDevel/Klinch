@@ -1,7 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace SichuanDynasty.UI
 {
@@ -32,35 +31,69 @@ namespace SichuanDynasty.UI
         private int _firstPlayerIndex;
 
         private bool _isHasWinner;
-        private bool _isProcess;
-        private bool _isTie;
+        private bool _isProcess = true;
+        private bool _isTie = true;
 
         private RockPaperScissorState[] _results;
 
 
-        public DecideFirstPlayerUIView()
+        private void Awake()
         {
             _isHasWinner = false;
             _firstPlayerIndex = 0;
-            _isProcess = true;
-            _isTie = true;
 
             _results = new RockPaperScissorState[GameController.MAX_PLAYER_SUPPORT];
-            for(int i = 0; i < _results.Length; i++)
+
+            ResetResults();
+        }
+
+        private void OnEnable()
+        {
+            _isHasWinner = false;
+            _isProcess = true;
+            _isTie = true;
+            ResetResults();
+
+            if(gamepadPanels != null)
             {
-                _results[i] = RockPaperScissorState.None;
+                foreach(var panel in gamepadPanels)
+                {
+                    if(panel != null)
+                    {
+                        panel.SetActive(true);
+                    }
+                }
+            }
+
+            if(resultPanels != null)
+            {
+                foreach(var panel in resultPanels)
+                {
+                    if(panel == null)
+                    {
+                        continue;
+                    }
+
+                    foreach(Transform child in panel.transform)
+                    {
+                        child.gameObject.SetActive(false);
+                    }
+
+                    panel.SetActive(false);
+                }
             }
         }
 
 
         private void Update()
         {
-            _HandlePlayerInput();
+            HandlePlayerInput();
         }
 
-        private void _HandlePlayerInput()
+
+        private void HandlePlayerInput()
         {
-            if(gameController.IsGameInit && _isProcess)
+            if(gameController != null && gameController.IsGameInit && _isProcess)
             {
 
                 if(Input.GetButtonDown("Player1_X") || Input.GetKeyDown(KeyCode.Q))
@@ -99,6 +132,7 @@ namespace SichuanDynasty.UI
             }
         }
 
+
         private void CheckWinner()
         {
             if((_results[0] != RockPaperScissorState.None) && (_results[1] != RockPaperScissorState.None))
@@ -108,7 +142,7 @@ namespace SichuanDynasty.UI
                 {
                     _isTie = true;
                     _isHasWinner = false;
-                    StartCoroutine(nameof(ShowResult), _isTie);
+                    ShowResult(_isTie);
 
                 }
                 else
@@ -172,16 +206,36 @@ namespace SichuanDynasty.UI
             }
         }
 
-        private void ShowResult(bool isTile)
+        private void ShowResult(bool isTie)
         {
-            for(int i = 0; i < resultPanels.Length; i++)
+            if(gamepadPanels == null || resultPanels == null || _results == null)
             {
-                gamepadPanels[i].SetActive(false);
-                resultPanels[i].SetActive(true);
+                Debug.LogWarning("DecideFirstPlayerUIView is missing panel assignments.", this);
+                return;
             }
 
-            for(int i = 0; i < _results.Length; i++)
+            var length = Mathf.Min(Mathf.Min(gamepadPanels.Length, resultPanels.Length), _results.Length);
+
+            for(int i = 0; i < length; i++)
             {
+                if(gamepadPanels[i] != null)
+                {
+                    gamepadPanels[i].SetActive(false);
+                }
+
+                if(resultPanels[i] != null)
+                {
+                    resultPanels[i].SetActive(true);
+                }
+            }
+
+            for(int i = 0; i < length; i++)
+            {
+                if(resultPanels[i] == null)
+                {
+                    continue;
+                }
+
                 switch(_results[i])
                 {
                     case RockPaperScissorState.Rock:
@@ -204,14 +258,25 @@ namespace SichuanDynasty.UI
                 }
             }
 
-            if(isTile)
-            {
-                _isTie = false;
-                for(int i = 0; i < _results.Length; i++)
+            if(isTie)
+                if(isTie)
                 {
-                    _results[i] = RockPaperScissorState.None;
+                    _isTie = false;
+                    ResetResults();
+                    StartCoroutine(nameof(ReShowUI));
                 }
-                StartCoroutine(nameof(ReShowUI));
+        }
+
+        private void ResetResults()
+        {
+            if(_results == null)
+            {
+                return;
+            }
+
+            for(int i = 0; i < _results.Length; i++)
+            {
+                _results[i] = RockPaperScissorState.None;
             }
         }
 
@@ -219,18 +284,35 @@ namespace SichuanDynasty.UI
         {
             yield return new WaitForSeconds(0.8f);
 
-            for(int i = 0; i < resultPanels.Length; i++)
+            if(resultPanels != null)
             {
-                foreach(Transform child in resultPanels[i].transform)
+                for(int i = 0; i < resultPanels.Length; i++)
                 {
-                    child.gameObject.SetActive(false);
+                    if(resultPanels[i] == null)
+                    {
+                        continue;
+                    }
+
+                    foreach(Transform child in resultPanels[i].transform)
+                    {
+                        child.gameObject.SetActive(false);
+                    }
                 }
             }
 
-            for(int i = 0; i < resultPanels.Length; i++)
+            var length = Mathf.Min(gamepadPanels != null ? gamepadPanels.Length : 0, resultPanels != null ? resultPanels.Length : 0);
+
+            for(int i = 0; i < length; i++)
             {
-                gamepadPanels[i].SetActive(true);
-                resultPanels[i].SetActive(false);
+                if(gamepadPanels != null && gamepadPanels[i] != null)
+                {
+                    gamepadPanels[i].SetActive(true);
+                }
+
+                if(resultPanels != null && resultPanels[i] != null)
+                {
+                    resultPanels[i].SetActive(false);
+                }
             }
 
             _isProcess = true;
@@ -240,8 +322,14 @@ namespace SichuanDynasty.UI
         {
             yield return new WaitForSeconds(2.0f);
             gameObject.SetActive(false);
-            nextUI.SetActive(true);
-            gameController.GameStart(_firstPlayerIndex);
+            if(nextUI != null)
+            {
+                nextUI.SetActive(true);
+            }
+            if(gameController != null)
+            {
+                gameController.GameStart(_firstPlayerIndex);
+            }
         }
     }
 }

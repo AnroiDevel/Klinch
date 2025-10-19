@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,10 +39,17 @@ namespace SichuanDynasty.UI
                 Debug.LogWarning($"Unknown status sign '{sign}'. Expected '+' or '-'", this);
             }
 
-            plus.SetActive(isPlus);
-            minus.SetActive(isMinus);
+            if(plus != null)
+            {
+                plus.SetActive(isPlus);
+            }
 
-            var digitArry = totalPoint.ToString().ToArray();
+            if(minus != null)
+            {
+                minus.SetActive(isMinus);
+            }
+
+            var digitArray = totalPoint.ToString().ToArray();
 
             if(digits == null || spriteOneToNine == null)
             {
@@ -51,21 +57,32 @@ namespace SichuanDynasty.UI
                 return;
             }
 
-            if(digitArry.Length > digits.Length)
+            if(digitArray.Length > digits.Length)
             {
-                Debug.LogWarning($"StatusView has only {digits.Length} digit slots, but value '{totalPoint}' requires {digitArry.Length}.", this);
-                digitArry = digitArry.Take(digits.Length).ToArray();
+                Debug.LogWarning($"StatusView has only {digits.Length} digit slots, but value '{totalPoint}' requires {digitArray.Length}.", this);
+                digitArray = digitArray.Take(digits.Length).ToArray();
             }
 
 
-            for(int i = 0; i < digitArry.Length; i++) {
+            for(int i = 0; i < digitArray.Length; i++) {
 
-                var value = Convert.ToInt32(digitArry[i]);
-                value -= 48;
+                var value = digitArray[i] - '0';
 
                 if(value < 0 || value >= spriteOneToNine.Length)
                 {
-                    Debug.LogWarning($"Digit '{digitArry[i]}' has no configured sprite.", this);
+                    Debug.LogWarning($"Digit '{digitArray[i]}' has no configured sprite.", this);
+                    continue;
+                }
+
+                if(spriteOneToNine[value] == null)
+                {
+                    Debug.LogWarning($"Sprite for digit '{digitArray[i]}' is not assigned.", this);
+                    continue;
+                }
+
+                if(digits[i] == null)
+                {
+                    Debug.LogWarning($"Digit image at index {i} is not assigned.", this);
                     continue;
                 }
 
@@ -79,8 +96,17 @@ namespace SichuanDynasty.UI
 
         public void HideAllDigits()
         {
-            for (int i = 0; i < digits.Length; i++) {
-                digits[i].gameObject.SetActive(false);
+            if(digits == null)
+            {
+                return;
+            }
+
+            for(int i = 0; i < digits.Length; i++)
+            {
+                if(digits[i] != null)
+                {
+                    digits[i].gameObject.SetActive(false);
+                }
             }
         }
 
@@ -88,8 +114,16 @@ namespace SichuanDynasty.UI
         {
             plus.SetActive(false);
             minus.SetActive(false);
-        }
+            if(plus != null)
+            {
+                plus.SetActive(false);
+            }
 
+            if(minus != null)
+            {
+                minus.SetActive(false);
+            }
+        }
 
         private IEnumerator ShowStatusCallBack()
         {
