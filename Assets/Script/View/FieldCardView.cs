@@ -64,16 +64,19 @@ namespace SichuanDynasty.UI
 
         public void ToggleSelect()
         {
-            if (gameController.IsInteractable) {
+            if(gameController.IsInteractable)
+            {
                 _isSelected = !_isSelected;
                 gameController.ToggleSelect(fieldCardIndex);
 
-                if (_isSelected && (gameController.CurrentPhase == GameController.Phase.Shuffle)) {
+                if(_isSelected && (gameController.CurrentPhase == GameController.Phase.Shuffle))
+                {
                     gameController.SetInteractable(false);
                     StartCoroutine(nameof(ChangeToBattlePhase));
                 }
 
-                if (gameController.CurrentPhase != GameController.Phase.Shuffle) {
+                if(gameController.CurrentPhase != GameController.Phase.Shuffle)
+                {
                     imgSelectDialog.GetComponent<Image>().sprite = _isSelected ? spriteAllConfirmSelect[1] : spriteAllConfirmSelect[0];
                 }
             }
@@ -82,23 +85,40 @@ namespace SichuanDynasty.UI
 
         private void Update()
         {
-            if (gameController) {
+            if(gameController)
+            {
 
-                if (gameController.IsGameInit && gameController.IsGameStart && !gameController.IsGameOver) {
+                if(gameController.IsGameInit && gameController.IsGameStart && !gameController.IsGameOver)
+                {
+                    var cache = playerIndex == 0
+                        ? gameController.FieldCardCache_1
+                        : gameController.FieldCardCache_2;
 
-                    if (playerIndex == 0) {
-                        txtCard.text = gameController.FieldCardCache_1[fieldCardIndex].ToString();
+                    if(cache != null && fieldCardIndex < cache.Length)
+                    {
+                        txtCard.text = cache[fieldCardIndex].ToString();
 
-                    } else if (playerIndex == 1) {
-                        txtCard.text = gameController.FieldCardCache_2[fieldCardIndex].ToString();
-
+                        if(imgCard != null && !imgCard.enabled)
+                        {
+                            imgCard.enabled = true;
+                        }
                     }
+                    else
+                    {
+                        txtCard.text = string.Empty;
 
+                        if(imgCard != null && imgCard.enabled)
+                        {
+                            imgCard.enabled = false;
+                        }
+                    }
                     imgConfirmSelect.SetActive(_isSelected);
 
-                    if (_isSelected) {
+                    if(_isSelected)
+                    {
 
-                        if (gameController.CurrentPhase == GameController.Phase.Shuffle) {
+                        if(gameController.CurrentPhase == GameController.Phase.Shuffle)
+                        {
                             _isSelected = false;
 
                         }
